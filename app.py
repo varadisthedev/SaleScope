@@ -33,12 +33,8 @@ MODEL_PATH = find_file(
     "best_model.joblib",
     [ROOT / "models", ROOT, Path("/content/models"), Path("/content")],
 )
-TRAIN_PATH = find_file(
-    "train.csv",
-    [ROOT / "data", ROOT, Path("/content/data"), Path("/content")],
-)
-TEST_PATH = find_file(
-    "test.csv",
+MONTHLY_PATH = find_file(
+    "monthly.csv",
     [ROOT / "data", ROOT, Path("/content/data"), Path("/content")],
 )
 
@@ -339,48 +335,18 @@ st.markdown(
 # -----------------------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data():
-    train = pd.read_csv(TRAIN_PATH)
-    test = pd.read_csv(TEST_PATH)
-
-    train["date"] = pd.to_datetime(train["date"])
-    test["date"] = pd.to_datetime(test["date"])
-
-    train["store"] = train["store"].astype(str)
-    train["item"] = train["item"].astype(str)
-    test["store"] = test["store"].astype(str)
-    test["item"] = test["item"].astype(str)
-
-    train["year"] = train["date"].dt.year
-    train["month"] = train["date"].dt.month
-    train["quarter"] = train["date"].dt.quarter
-
-    monthly = (
-        train.groupby(["year", "month", "quarter", "store", "item"], as_index=False)["sales"]
-        .sum()
-        .rename(columns={"sales": "monthly_demand"})
-    )
-
-    monthly["date"] = pd.to_datetime(
-        monthly["year"].astype(str) + "-" + monthly["month"].astype(str) + "-01"
-    )
-
+    # monthly.csv = train.csv pre-aggregated to store/item/month (17 MB -> ~1 MB)
+    monthly = pd.read_csv(MONTHLY_PATH, dtype={"store": str, "item": str})
+    monthly["quarter"] = (monthly["month"] - 1) // 3 + 1
+    monthly["date"] = pd.to_datetime(dict(year=monthly["year"], month=monthly["month"], day=1))
     start_year = monthly["year"].min()
-    monthly["time_index"] = (
-        (monthly["year"] - start_year) * 12 + monthly["month"]
-    )
+    monthly["time_index"] = (monthly["year"] - start_year) * 12 + monthly["month"]
     monthly = monthly.sort_values(["date", "store", "item"]).reset_index(drop=True)
-
-    test["year"] = test["date"].dt.year
-    test["month"] = test["date"].dt.month
-    test["quarter"] = test["date"].dt.quarter
-    test["time_index"] = (
-        (test["year"] - start_year) * 12 + test["month"]
-    )
 
     # Any month through 2027 can be forecast: the model only needs year/month/time_index.
     # ponytail: Random Forest can't extrapolate trend past the training range, so far-out months flatten.
     grid = pd.MultiIndex.from_product(
-        [pd.date_range("2018-01-01", "2027-12-01", freq="MS"), sorted(train["store"].unique()), sorted(train["item"].unique())],
+        [pd.date_range("2018-01-01", "2027-12-01", freq="MS"), sorted(monthly["store"].unique()), sorted(monthly["item"].unique())],
         names=["date", "store", "item"],
     ).to_frame(index=False)
     grid["year"] = grid["date"].dt.year
@@ -389,7 +355,7 @@ def load_data():
     grid["time_index"] = (grid["year"] - start_year) * 12 + grid["month"]
     future = grid[["date", "year", "month", "quarter", "time_index", "store", "item"]]
 
-    return train, test, monthly, future
+    return monthly, future
 
 
 @st.cache_resource(show_spinner=False)
@@ -397,7 +363,7 @@ def load_model():
     return joblib.load(MODEL_PATH)
 
 
-train_raw, test_raw, monthly_df, future_df = load_data()
+monthly_df, future_df = load_data()
 model = load_model()
 
 
