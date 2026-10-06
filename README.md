@@ -7,7 +7,7 @@
 [![Live app](https://img.shields.io/badge/Live_app-mysalescope.streamlit.app-8A5A3B?style=for-the-badge&logo=streamlit&logoColor=white)](https://mysalescope.streamlit.app)
 [![Kaggle dataset](https://img.shields.io/badge/Dataset-Kaggle-4A2C20?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/competitions/demand-forecasting-kernels-only/data)
 
-<img src="https://skillicons.dev/icons?i=python,sklearn,pandas,numpy,plotly,github,vscode,jupyter&theme=light" alt="Tech stack" />
+<img src="https://cdn.simpleicons.org/python/3776AB" width="40" height="40" alt="python" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="40" height="40" alt="scikitlearn" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/pandas/150458" width="40" height="40" alt="pandas" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/numpy/4DABCF" width="40" height="40" alt="numpy" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/plotly/7A76FF" width="40" height="40" alt="plotly" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/jupyter/F37626" width="40" height="40" alt="jupyter" />&nbsp;&nbsp;<img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="40" height="40" alt="streamlit" />
 
 </div>
 
@@ -45,13 +45,13 @@ Training happens in [`notebook/`](notebook); the app only loads the saved pipeli
 
 | | Tool | Used for |
 |---|---|---|
-| <img src="https://skillicons.dev/icons?i=python" width="28"> | Python | Everything |
-| <img src="https://skillicons.dev/icons?i=sklearn" width="28"> | scikit-learn 1.6.1 | Model and preprocessing pipeline |
-| <img src="https://skillicons.dev/icons?i=pandas" width="28"> | pandas | Data prep and aggregation |
-| <img src="https://skillicons.dev/icons?i=numpy" width="28"> | NumPy | Numerics |
-| <img src="https://skillicons.dev/icons?i=plotly" width="28"> | Plotly | Trend chart and heatmap |
-| <img src="https://skillicons.dev/icons?i=jupyter" width="28"> | Jupyter | Training and evaluation notebook |
-| <img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" width="28"> | Streamlit | Web app and hosting |
+| <img src="https://cdn.simpleicons.org/python/3776AB" width="28" height="28" alt="python" /> | Python | Everything |
+| <img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="28" height="28" alt="scikitlearn" /> | scikit-learn 1.6.1 | Model and preprocessing pipeline |
+| <img src="https://cdn.simpleicons.org/pandas/150458" width="28" height="28" alt="pandas" /> | pandas | Data prep and aggregation |
+| <img src="https://cdn.simpleicons.org/numpy/4DABCF" width="28" height="28" alt="numpy" /> | NumPy | Numerics |
+| <img src="https://cdn.simpleicons.org/plotly/7A76FF" width="28" height="28" alt="plotly" /> | Plotly | Trend chart and heatmap |
+| <img src="https://cdn.simpleicons.org/jupyter/F37626" width="28" height="28" alt="jupyter" /> | Jupyter | Training and evaluation notebook |
+| <img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="28" height="28" alt="streamlit" /> | Streamlit | Web app and hosting |
 
 ## Project structure
 
